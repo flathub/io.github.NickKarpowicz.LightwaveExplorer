@@ -67,12 +67,9 @@
                     "rm l_BaseKit_p_2023.2.0.49397_offline.sh",
                     "webimage_extracted/l_BaseKit_p_2023.2.0.49397_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel:intel.oneapi.lin.dpcpp-cpp-compiler --install-dir=/app/opt/intel/oneapi --eula=accept",
                     "rm -rf /app/opt/intel/oneapi/compiler/latest/linux/lib/oclfpga/host/linux64/bin/perl/lib",
-                    "mkdir -p /app/lib/pkgconfig",
-                    "cp -a /app/opt/intel/oneapi/compiler/latest/linux/compiler/lib/intel64/* /app/lib/",
-                    "cp -a /app/opt/intel/oneapi/compiler/latest/linux/lib/x64/* /app/lib/",
+                    "mkdir /app/lib",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbb.so* /app/lib/",
-                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/",
-                    "cp /app/opt/intel/oneapi/compiler/latest/lib/pkgconfig/openmp.pc /app/lib/pkgconfig/"
+                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/"
                     ],
             "sources": [
                 {
