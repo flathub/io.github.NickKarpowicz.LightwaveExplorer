@@ -29,8 +29,8 @@
             "name": "oneAPI",
             "buildsystem": "simple",
             "build-options":{
-                "append-path": "/usr/lib/sdk/llvm15/bin",
-                "prepend-ld-library-path": "/usr/lib/sdk/llvm15/lib"
+                "append-path": "/usr/lib/sdk/llvm17/bin",
+                "prepend-ld-library-path": "/usr/lib/sdk/llvm17/lib"
                 },
             "build-commands": [
                     "chmod +x l_BaseKit_p_2024.2.0.634_offline.sh",
