@@ -1,10 +1,10 @@
 {
     "id": "io.github.NickKarpowicz.LightwaveExplorer",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.7",
+    "runtime-version": "6.8",
     "sdk": "org.kde.Sdk",
     "sdk-extensions":[
-        "org.freedesktop.Sdk.Extension.llvm15"],
+        "org.freedesktop.Sdk.Extension.llvm19"],
     "command": "flatpakLauncher.sh",
     "finish-args": [
         "--share=ipc",
@@ -29,8 +29,8 @@
             "name": "oneAPI",
             "buildsystem": "simple",
             "build-options":{
-                "append-path": "/usr/lib/sdk/llvm15/bin",
-                "prepend-ld-library-path": "/usr/lib/sdk/llvm15/lib"
+                "append-path": "/usr/lib/sdk/llvm19/bin",
+                "prepend-ld-library-path": "/usr/lib/sdk/llvm19/lib"
                 },
             "build-commands": [
                     "chmod +x l_BaseKit_p_2024.2.0.634_offline.sh",
@@ -108,12 +108,12 @@
             "buildsystem": "simple",
             "build-commands":[
                 "mkdir /app/tmp",
-                "sh cuda_12.5.1_555.42.06_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp"],
+                "sh cuda_12.8.0_570.86.10_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp"],
             "sources":[
                 {
                     "type": "file",
-                    "url": "https://developer.download.nvidia.com/compute/cuda/12.5.1/local_installers/cuda_12.5.1_555.42.06_linux.run",
-                    "sha256": "b5e0a779e089c86610051141c4cf498beef431858ec63398107391727ecbdb04"
+                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run",
+                    "sha256": "610867dcd6d94c4e36c4924f1d01b9db28ec08164e8af6c764f21b84200695f8"
                 }
             ]
         },
@@ -121,7 +121,7 @@
             "name": "LightwaveExplorer",
             "buildsystem": "cmake-ninja",
             "config-opts": [
-                "-DMAKECUDAFLATPAK=TRUE",
+                "-DFLATPAK=1",
                 "-DCMAKE_CXX_COMPILER=g++", 
                 "-DCMAKE_CUDA_ARCHITECTURES='75;86;89'", 
                 "-DCUDAToolkit_ROOT=/app/opt/cuda",
@@ -131,8 +131,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
-                    "tag": "2024.5",
-                    "commit": "4b793aee22c394b838c649e98ee42100ddc9f852"
+                    "tag": "v2025.0.1",
+                    "commit": "a5b56c595f594a1627daf9451b206d9e5651ed29"
                 }
             ]
         } 
