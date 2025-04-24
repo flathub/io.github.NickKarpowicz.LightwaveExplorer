@@ -1,7 +1,7 @@
 {
     "id": "io.github.NickKarpowicz.LightwaveExplorer",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.8",
+    "runtime-version": "6.9",
     "sdk": "org.kde.Sdk",
     "sdk-extensions":[
         "org.freedesktop.Sdk.Extension.llvm19"],
@@ -26,6 +26,29 @@
     ],
     "modules": [
         {
+            "name": "cuda",
+            "buildsystem": "simple",
+            "build-commands":[
+                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/libcufft",
+                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_nvcc",
+                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_cudart",
+                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_nvml_dev",
+                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_cccl",
+                "mkdir -p /app/opt/cuda",
+                "cp -r -P builds/cuda_nvcc/* /app/opt/cuda",
+                "cp -r -P builds/cuda_cudart/* /app/opt/cuda",
+                "cp -r -P builds/cuda_nvml_dev/* /app/opt/cuda",
+                "cp -r -P builds/cuda_cccl/* /app/opt/cuda",
+                "cp -r -P builds/libcufft/* /app/opt/cuda"],
+            "sources":[
+                {
+                    "type": "file",
+                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda_12.8.1_570.124.06_linux.run",
+                    "sha256": "228f6bcaf5b7618d032939f431914fc92d0e5ed39ebe37098a24502f26a19797"
+                }
+            ]
+        },
+        {
             "name": "oneAPI",
             "buildsystem": "simple",
             "build-options":{
@@ -36,11 +59,14 @@
                     "chmod +x l_BaseKit_p_2024.2.0.634_offline.sh",
                     "./l_BaseKit_p_2024.2.0.634_offline.sh -x -f webimage_extracted",
                     "rm l_BaseKit_p_2024.2.0.634_offline.sh",
-                    "webimage_extracted/l_BaseKit_p_2024.2.0.634_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel:intel.oneapi.lin.dpcpp-cpp-compiler --install-dir=/app/opt/intel/oneapi --eula=accept",
-                    "rm -rf /app/opt/intel/oneapi/compiler/latest/opt/oclfpga/host/linux64/bin/perl/lib",
+                    "webimage_extracted/l_BaseKit_p_2024.2.0.634_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel --install-dir=/app/opt/intel/oneapi --eula=accept",
                     "mkdir /app/lib",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbb.so* /app/lib/",
-                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/"
+                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/",
+                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib32",
+                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib/*.so*",
+                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib/libmkl_sycl.a",
+                    "rm -rf /app/opt/intel/oneapi/conda_channel"
                     ],
             "sources": [
                 {
@@ -49,12 +75,7 @@
                     "sha256": "ae97f1b7146f610c07232d75cac8d37f6b2998df416411bef9a9f6c9d23591a4"
         
                 }
-            ],
-            "cleanup":[
-                "/opt/intel/oneapi/mkl/latest/lib/ia32",
-                "/opt/intel/oneapi/mkl/latest/lib/intel64/*.so*",
-                "/opt/intel/oneapi/conda_channel"
-                ]
+            ]
         },
         {
             "name": "fmt",
@@ -104,20 +125,6 @@
             ]
         },
         {
-            "name": "cuda",
-            "buildsystem": "simple",
-            "build-commands":[
-                "mkdir /app/tmp",
-                "sh cuda_12.8.0_570.86.10_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp"],
-            "sources":[
-                {
-                    "type": "file",
-                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run",
-                    "sha256": "610867dcd6d94c4e36c4924f1d01b9db28ec08164e8af6c764f21b84200695f8"
-                }
-            ]
-        },
-        {
             "name": "LightwaveExplorer",
             "buildsystem": "cmake-ninja",
             "config-opts": [
@@ -131,8 +138,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
-                    "tag": "v2025.2.2",
-                    "commit": "6ff5340070a92a21fda28e34b4e554a89e9d216f"
+                    "tag": "v2025.3.1.1",
+                    "commit": "f626c53a522961a7306d54d1c000bd82d2f32cb8"
                 }
             ]
         } 
