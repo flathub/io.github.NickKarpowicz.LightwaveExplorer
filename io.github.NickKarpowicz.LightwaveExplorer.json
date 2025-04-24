@@ -26,6 +26,33 @@
     ],
     "modules": [
         {
+            "name": "cuda",
+            "buildsystem": "simple",
+            "build-commands":[
+                "mkdir /app/tmp",
+                "sh cuda_12.8.1_570.124.06_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp",
+                "rm -rf /app/opt/cuda/compute-sanitizer",
+                "rm -rf /app/opt/cuda/extras",
+                "rm -rf /app/opt/cuda/gds",
+                "rm -rf /app/opt/cuda/gds-12.8",
+                "rm -rf /app/opt/cuda/libnvvp",
+                "rm -rf /app/opt/cuda/nsight-compute-2025.1.1",
+                "rm -rf /app/opt/cuda/nsight-systems-2024.6.2",
+                "rm -rf /app/opt/cuda/nsightee_plugins",
+                "rm -rf /app/opt/cuda/targets/x86_64-linux/lib/libcublas*",
+                "rm -rf /app/opt/cuda/targets/x86_64-linux/lib/libcusparse*",
+                "rm -rf /app/opt/cuda/targets/x86_64-linux/lib/libcusolver*",
+                "rm -rf /app/opt/cuda/targets/x86_64-linux/lib/libcurand*",
+                "rm -rf /app/opt/cuda/targets/x86_64-linux/lib/libnvrtc*"],
+            "sources":[
+                {
+                    "type": "file",
+                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda_12.8.1_570.124.06_linux.run",
+                    "sha256": "228f6bcaf5b7618d032939f431914fc92d0e5ed39ebe37098a24502f26a19797"
+                }
+            ]
+        },
+        {
             "name": "oneAPI",
             "buildsystem": "simple",
             "build-options":{
@@ -37,9 +64,12 @@
                     "./l_BaseKit_p_2024.2.0.634_offline.sh -x -f webimage_extracted",
                     "rm l_BaseKit_p_2024.2.0.634_offline.sh",
                     "webimage_extracted/l_BaseKit_p_2024.2.0.634_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel --install-dir=/app/opt/intel/oneapi --eula=accept",
-                    "mkdir /app/lib",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbb.so* /app/lib/",
-                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/"
+                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/",
+                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib32",
+                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib/*.so*",
+                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib/libmkl_sycl.a",
+                    "rm -rf /app/opt/intel/oneapi/conda_channel"
                     ],
             "sources": [
                 {
@@ -48,12 +78,7 @@
                     "sha256": "ae97f1b7146f610c07232d75cac8d37f6b2998df416411bef9a9f6c9d23591a4"
         
                 }
-            ],
-            "cleanup":[
-                "/opt/intel/oneapi/mkl/latest/lib/ia32",
-                "/opt/intel/oneapi/mkl/latest/lib/intel64/*.so*",
-                "/opt/intel/oneapi/conda_channel"
-                ]
+            ]
         },
         {
             "name": "fmt",
@@ -99,20 +124,6 @@
                     "url": "https://github.com/richgel999/miniz",
                     "tag": "3.0.2",
                     "commit": "293d4db1b7d0ffee9756d035b9ac6f7431ef8492"
-                }
-            ]
-        },
-        {
-            "name": "cuda",
-            "buildsystem": "simple",
-            "build-commands":[
-                "mkdir /app/tmp",
-                "sh cuda_12.8.1_570.124.06_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp"],
-            "sources":[
-                {
-                    "type": "file",
-                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda_12.8.1_570.124.06_linux.run",
-                    "sha256": "228f6bcaf5b7618d032939f431914fc92d0e5ed39ebe37098a24502f26a19797"
                 }
             ]
         },
