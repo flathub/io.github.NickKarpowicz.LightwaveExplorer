@@ -36,8 +36,7 @@
                     "chmod +x l_BaseKit_p_2024.2.0.634_offline.sh",
                     "./l_BaseKit_p_2024.2.0.634_offline.sh -x -f webimage_extracted",
                     "rm l_BaseKit_p_2024.2.0.634_offline.sh",
-                    "webimage_extracted/l_BaseKit_p_2024.2.0.634_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel:intel.oneapi.lin.dpcpp-cpp-compiler --install-dir=/app/opt/intel/oneapi --eula=accept",
-                    "rm -rf /app/opt/intel/oneapi/compiler/latest/opt/oclfpga/host/linux64/bin/perl/lib",
+                    "webimage_extracted/l_BaseKit_p_2024.2.0.634_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel --install-dir=/app/opt/intel/oneapi --eula=accept",
                     "mkdir /app/lib",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbb.so* /app/lib/",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/"
@@ -112,8 +111,8 @@
             "sources":[
                 {
                     "type": "file",
-                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run",
-                    "sha256": "610867dcd6d94c4e36c4924f1d01b9db28ec08164e8af6c764f21b84200695f8"
+                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda_12.8.1_570.124.06_linux.run",
+                    "sha256": "228f6bcaf5b7618d032939f431914fc92d0e5ed39ebe37098a24502f26a19797"
                 }
             ]
         },
