@@ -107,7 +107,7 @@
             "buildsystem": "simple",
             "build-commands":[
                 "mkdir /app/tmp",
-                "sh cuda_12.8.0_570.86.10_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp"],
+                "sh cuda_12.8.1_570.124.06_linux.run --silent --toolkitpath=/app/opt/cuda --toolkit --override --tmpdir=/app/tmp"],
             "sources":[
                 {
                     "type": "file",
