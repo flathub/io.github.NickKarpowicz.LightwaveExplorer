@@ -1,7 +1,7 @@
 {
     "id": "io.github.NickKarpowicz.LightwaveExplorer",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.8",
+    "runtime-version": "6.9",
     "sdk": "org.kde.Sdk",
     "sdk-extensions":[
         "org.freedesktop.Sdk.Extension.llvm19"],
@@ -131,8 +131,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
-                    "tag": "v2025.2.2",
-                    "commit": "6ff5340070a92a21fda28e34b4e554a89e9d216f"
+                    "tag": "v2025.3",
+                    "commit": "f7d47504688fa9c4a5ce27f4e474b1a2b22f74fb"
                 }
             ]
         } 
