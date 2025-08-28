@@ -56,10 +56,10 @@
                 "prepend-ld-library-path": "/usr/lib/sdk/llvm19/lib"
                 },
             "build-commands": [
-                    "chmod +x l_BaseKit_p_2024.2.0.634_offline.sh",
-                    "./l_BaseKit_p_2024.2.0.634_offline.sh -x -f webimage_extracted",
-                    "rm l_BaseKit_p_2024.2.0.634_offline.sh",
-                    "webimage_extracted/l_BaseKit_p_2024.2.0.634_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel --install-dir=/app/opt/intel/oneapi --eula=accept",
+                    "chmod +x intel-cpp-essentials-2025.2.1.5_offline.sh",
+                    "./intel-cpp-essentials-2025.2.1.5_offline.sh -x -f webimage_extracted",
+                    "rm intel-cpp-essentials-2025.2.1.5_offline.sh",
+                    "webimage_extracted/intel-cpp-essentials-2025.2.1.5_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel --install-dir=/app/opt/intel/oneapi --eula=accept",
                     "mkdir /app/lib",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbb.so* /app/lib/",
                     "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/",
@@ -71,8 +71,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://registrationcenter-download.intel.com/akdlm/IRC_NAS/9a98af19-1c68-46ce-9fdd-e249240c7c42/l_BaseKit_p_2024.2.0.634_offline.sh",
-                    "sha256": "ae97f1b7146f610c07232d75cac8d37f6b2998df416411bef9a9f6c9d23591a4"
+                    "url": "https://registrationcenter-download.intel.com/akdlm/IRC_NAS/945570e3-ac79-47be-b500-2a018e99f172/intel-cpp-essentials-2025.2.1.5_offline.sh",
+                    "sha256": "d593d22b97ee01cecc7d00eab1106fd93ab693e422a0e6f4fb65cab041806d1f"
         
                 }
             ]
@@ -138,8 +138,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
-                    "tag": "v2025.5",
-                    "commit": "f2ca1391d958d72e7ecceca822b87fe94657858e"
+                    "tag": "v2025.6",
+                    "commit": "7bd1003e33919cdbed55864ffdbfe52412412ebe"
                 }
             ]
         } 
