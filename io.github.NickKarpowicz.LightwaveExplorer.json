@@ -92,8 +92,8 @@
         {
           "type": "git",
           "url": "https://github.com/richgel999/miniz",
-          "tag": "3.0.2",
-          "commit": "293d4db1b7d0ffee9756d035b9ac6f7431ef8492"
+          "tag": "3.1.1",
+          "commit": "d10b03cc73475af673df40f06e5cefd1d5f940d9"
         }
       ]
     },
