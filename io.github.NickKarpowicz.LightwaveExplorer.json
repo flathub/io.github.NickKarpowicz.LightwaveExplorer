@@ -1,147 +1,143 @@
 {
-    "id": "io.github.NickKarpowicz.LightwaveExplorer",
-    "runtime": "org.kde.Platform",
-    "runtime-version": "6.9",
-    "sdk": "org.kde.Sdk",
-    "sdk-extensions":[
-        "org.freedesktop.Sdk.Extension.llvm19"],
-    "command": "flatpakLauncher.sh",
-    "finish-args": [
-        "--share=ipc",
-        "--device=dri",
-        "--socket=wayland",
-        "--socket=fallback-x11"
-    ],
-    "cleanup": [
-        "/include",
-        "/lib/cmake",
-        "/lib/pkgconfig",
-        "/lib/*.la",
-        "/lib/*.a",
-        "/mkspecs",
-        "/share/aclocal",
-        "/share/info",
-        "/share/man",
-        "/opt"
-    ],
-    "modules": [
+  "id": "io.github.NickKarpowicz.LightwaveExplorer",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "6.10",
+  "sdk": "org.kde.Sdk",
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.llvm21"],
+  "command": "flatpakLauncher.sh",
+  "finish-args": [
+    "--share=ipc",
+    "--device=dri",
+    "--socket=wayland",
+    "--socket=fallback-x11"
+  ],
+  "cleanup": [
+    "/include",
+    "/lib/cmake",
+    "/lib/pkgconfig",
+    "/lib/*.la",
+    "/lib/*.a",
+    "/mkspecs",
+    "/share/aclocal",
+    "/share/info",
+    "/share/man",
+    "/opt"
+  ],
+  "modules": [
+    {
+      "name": "cuda",
+      "buildsystem": "simple",
+      "build-commands": [
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/libcufft",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_nvcc",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_cudart",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_crt",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_nvml_dev",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_cccl",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/libnvvm",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_nvrtc",
+        "sh cuda_13.1.1_590.48.01_linux.run --tar xvf ./builds/cuda_culibos",
+        "mkdir -p /app/opt/cuda",
+        "cp -r -P builds/cuda_nvcc/* /app/opt/cuda",
+        "cp -r -P builds/cuda_cudart/* /app/opt/cuda",
+        "cp -r -P builds/cuda_crt/* /app/opt/cuda",
+        "cp -r -P builds/cuda_nvml_dev/* /app/opt/cuda",
+        "cp -r -P builds/cuda_cccl/* /app/opt/cuda",
+        "cp -r -P builds/libcufft/* /app/opt/cuda",
+        "cp -r -P builds/libnvvm/* /app/opt/cuda",
+        "cp -r -P builds/cuda_nvrtc/* /app/opt/cuda",
+        "cp -r -P builds/cuda_culibos/* /app/opt/cuda",
+        "sed -i 's/rsqrt(double x);/rsqrt(double x) noexcept (true);/g' /app/opt/cuda/targets/x86_64-linux/include/crt/math_functions.h",
+        "sed -i 's/rsqrtf(float x);/rsqrtf(float x) noexcept (true);/g' /app/opt/cuda/targets/x86_64-linux/include/crt/math_functions.h"
+      ],
+      "sources": [
         {
-            "name": "cuda",
-            "buildsystem": "simple",
-            "build-commands":[
-                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/libcufft",
-                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_nvcc",
-                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_cudart",
-                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_nvml_dev",
-                "sh cuda_12.8.1_570.124.06_linux.run --tar xvf ./builds/cuda_cccl",
-                "mkdir -p /app/opt/cuda",
-                "cp -r -P builds/cuda_nvcc/* /app/opt/cuda",
-                "cp -r -P builds/cuda_cudart/* /app/opt/cuda",
-                "cp -r -P builds/cuda_nvml_dev/* /app/opt/cuda",
-                "cp -r -P builds/cuda_cccl/* /app/opt/cuda",
-                "cp -r -P builds/libcufft/* /app/opt/cuda"],
-            "sources":[
-                {
-                    "type": "file",
-                    "url": "https://developer.download.nvidia.com/compute/cuda/12.8.1/local_installers/cuda_12.8.1_570.124.06_linux.run",
-                    "sha256": "228f6bcaf5b7618d032939f431914fc92d0e5ed39ebe37098a24502f26a19797"
-                }
-            ]
-        },
+          "type": "file",
+          "url": "https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda_13.1.1_590.48.01_linux.run",
+          "sha256": "24ff323723722781436804b392a48f691cb40de9808095d3e2192d0db6dfb8e4"
+        }
+      ]
+    },
+    {
+      "name": "gcem",
+      "buildsystem": "cmake-ninja",
+      "config-opts": ["-DCMAKE_POLICY_VERSION_MINIMUM=3.5"],
+      "sources": [
         {
-            "name": "oneAPI",
-            "buildsystem": "simple",
-            "build-options":{
-                "append-path": "/usr/lib/sdk/llvm19/bin",
-                "prepend-ld-library-path": "/usr/lib/sdk/llvm19/lib"
-                },
-            "build-commands": [
-                    "chmod +x intel-cpp-essentials-2025.2.1.5_offline.sh",
-                    "./intel-cpp-essentials-2025.2.1.5_offline.sh -x -f webimage_extracted",
-                    "rm intel-cpp-essentials-2025.2.1.5_offline.sh",
-                    "webimage_extracted/intel-cpp-essentials-2025.2.1.5_offline/bootstrapper -s --action=install --components=intel.oneapi.lin.mkl.devel:intel.oneapi.lin.tbb.devel --install-dir=/app/opt/intel/oneapi --eula=accept",
-                    "mkdir /app/lib",
-                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbb.so* /app/lib/",
-                    "cp -a /app/opt/intel/oneapi/tbb/latest/lib/intel64/gcc4.8/libtbbmalloc.so* /app/lib/",
-                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib32",
-                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib/*.so*",
-                    "rm -rf /app/opt/intel/oneapi/mkl/latest/lib/libmkl_sycl.a",
-                    "rm -rf /app/opt/intel/oneapi/conda_channel"
-                    ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://registrationcenter-download.intel.com/akdlm/IRC_NAS/945570e3-ac79-47be-b500-2a018e99f172/intel-cpp-essentials-2025.2.1.5_offline.sh",
-                    "sha256": "d593d22b97ee01cecc7d00eab1106fd93ab693e422a0e6f4fb65cab041806d1f"
-        
-                }
-            ]
-        },
+          "type": "git",
+          "url": "https://github.com/kthohr/gcem",
+          "tag": "v1.18.0",
+          "commit": "012ae73c6d0a2cb09ffe86475f5c6fba3926e200"
+        }
+      ]
+    },
+    {
+      "name": "dlib",
+      "buildsystem": "simple",
+      "build-commands": ["cp -R dlib /app/include/"],
+      "sources": [
         {
-            "name": "fmt",
-            "config-opts": ["-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE", "-DFMT_TEST=OFF"],
-            "buildsystem": "cmake-ninja",
-            "sources": [ 
-                { 
-                    "type": "git", 
-                    "url": "https://github.com/fmtlib/fmt", 
-                    "tag": "10.1.0",
-                    "commit": "e57ca2e3685b160617d3d95fcd9e789c4e06ca88" } 
-                ]
-        },
+          "type": "git",
+          "url": "https://github.com/davisking/dlib",
+          "tag": "v19.24.2",
+          "commit": "39749fba5163d4e25030358f6aa8d91617bfdca2"
+        }
+      ]
+    },
+    {
+      "name": "miniz",
+      "buildsystem": "cmake-ninja",
+      "config-opts": ["-DCMAKE_POLICY_VERSION_MINIMUM=3.5"],
+      "sources": [
         {
-            "name": "gcem",
-            "buildsystem": "cmake-ninja",
-            "sources": [ 
-                { 
-                    "type": "git", 
-                    "url": "https://github.com/kthohr/gcem", 
-                    "tag": "v1.17.0",
-                    "commit": "8422f5307b0498d09cf626f38acb03fe9f1efd94" } 
-                ]
-        },
+          "type": "git",
+          "url": "https://github.com/richgel999/miniz",
+          "tag": "3.1.1",
+          "commit": "d10b03cc73475af673df40f06e5cefd1d5f940d9"
+        }
+      ]
+    },
+    {
+      "name": "tbb",
+      "buildsystem": "cmake-ninja",
+      "build-options": {
+        "append-path": "/usr/lib/sdk/llvm21/bin",
+        "prepend-ld-library-path": "/usr/lib/sdk/llvm21/lib"
+      },
+      "config-opts": [
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "-DCMAKE_CXX_COMPILER=clang++",
+        "-DCMAKE_CXX_FLAGS='-O3 -march=x86-64-v3'"
+      ],
+      "sources": [
         {
-            "name": "dlib",
-            "buildsystem": "simple",
-            "build-commands":["cp -R dlib /app/include/"],
-            "sources": [ 
-                { 
-                    "type": "git", 
-                    "url": "https://github.com/davisking/dlib", 
-                    "tag": "v19.24.2",
-                    "commit": "39749fba5163d4e25030358f6aa8d91617bfdca2" } 
-                ]
-        },
+          "type": "git",
+          "url": "https://github.com/uxlfoundation/oneTBB",
+          "tag": "v2022.3.0",
+          "commit": "f1862f38f83568d96e814e469ab61f88336cc595"
+        }
+      ]
+    },
+    {
+      "name": "LightwaveExplorer",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DFLATPAK=1",
+        "-DCMAKE_CXX_COMPILER=g++",
+        "-DCMAKE_CUDA_ARCHITECTURES='75;86;89;90;120'",
+        "-DCUDAToolkit_ROOT=/app/opt/cuda",
+        "-DCMAKE_CUDA_COMPILER=/app/opt/cuda/bin/nvcc",
+        "-DCMAKE_CUDA_HOST_COMPILER=g++",
+        "-DCMAKE_CXX_FLAGS='-O3 -march=x86-64-v3'"
+      ],
+      "sources": [
         {
-            "name": "miniz",
-            "buildsystem": "cmake-ninja",
-            "sources":[
-                {
-                    "type": "git",
-                    "url": "https://github.com/richgel999/miniz",
-                    "tag": "3.0.2",
-                    "commit": "293d4db1b7d0ffee9756d035b9ac6f7431ef8492"
-                }
-            ]
-        },
-        {
-            "name": "LightwaveExplorer",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DFLATPAK=1",
-                "-DCMAKE_CXX_COMPILER=g++", 
-                "-DCMAKE_CUDA_ARCHITECTURES='75;86;89'", 
-                "-DCUDAToolkit_ROOT=/app/opt/cuda",
-                "-DCMAKE_CUDA_COMPILER=/app/opt/cuda/bin/nvcc",
-                "-DCMAKE_CUDA_HOST_COMPILER=g++"],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
-                    "tag": "v2025.6",
-                    "commit": "7bd1003e33919cdbed55864ffdbfe52412412ebe"
-                }
-            ]
-        } 
-    ]
+          "type": "git",
+          "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
+          "tag": "v2026.1",
+          "commit": "ab9944df52b2f7051c9d852ef33ceaa6da8981e8"
+        }
+      ]
+    }
+  ]
 }
