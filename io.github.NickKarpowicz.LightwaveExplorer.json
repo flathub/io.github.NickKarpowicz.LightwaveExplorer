@@ -134,8 +134,8 @@
         {
           "type": "git",
           "url": "https://github.com/NickKarpowicz/LightwaveExplorer",
-          "tag": "v2026.2.6",
-          "commit": "1d0c36d9bebdca810faa4616546ceb78c23895a5"
+          "tag": "v2026.2.7",
+          "commit": "2d6a1c08ab4adfef159d938af16c94d40a216f44"
         }
       ]
     }
